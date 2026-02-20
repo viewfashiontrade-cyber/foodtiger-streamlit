@@ -23,94 +23,52 @@ st.set_page_config(
 # Custom CSS for Swiggy style - Green/Orange gradient, glassmorphism, responsive
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap');
+        /* Sidebar hide (top-right menu se khole bina) */
+    [data-testid="stSidebar"][aria-expanded="true"] {
+        display: none;
+    }
+    [data-testid="stSidebar"][aria-expanded="false"] {
+        display: none;
+    }
+
+    /* Top-right collapse button bhi hata do */
+    [data-testid="collapsedControl"] {
+        display: none;
+    }
+
     
-    * {
-        font-family: 'Poppins', sans-serif;
-    }
-    .hindi-text {
-        font-family: 'Noto Sans Devanagari', sans-serif;
-    }
-    
-    .main .block-container {
-        padding-top: 1rem;
-    }
-    
-    /* Gradient background */
-    .stApp {
-        background: linear-gradient(135deg, #00D084 0%, #FF6B35 50%, #00D084 100%);
-        background-attachment: fixed;
-    }
-    
-    /* Glassmorphism cards */
-    .metric-card {
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        padding: 1.5rem;
-        margin: 1rem 0;
-        transition: all 0.3s ease;
-    }
-    .metric-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-    }
-    
-    /* Buttons */
-    .stButton > button {
-        background: linear-gradient(45deg, #00D084, #FF6B35);
-        border: none;
-        border-radius: 50px;
-        padding: 0.75rem 2rem;
-        font-weight: 600;
-        color: white;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 208, 132, 0.4);
-    }
-    .stButton > button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 20px rgba(0, 208, 132, 0.6);
-    }
-    
-    /* Responsive */
+        /* Responsive */
     @media (max-width: 768px) {
-        /* main container ko side se thoda compress karo */
         .main .block-container {
             padding-left: 0.5rem;
             padding-right: 0.5rem;
         }
 
-        /* cards compact */
         .metric-card {
             margin: 0.4rem 0;
             padding: 0.8rem;
         }
 
-        /* buttons full-width and slightly smaller text */
         .stButton > button {
             width: 100%;
             padding: 0.9rem;
             font-size: 0.9rem;
         }
 
-        /* headings thoda chhota */
         h1, h2, h3 {
             font-size: 1.1rem;
         }
 
-        /* columns ko force 100% width (Streamlit already stack karega, ye help karega) */
         [data-testid="column"] {
             width: 100% !important;
             flex: 1 1 100% !important;
         }
 
-        /* tables scrollable so that mobile me cut na ho */
         .stDataFrame, .stDataFrame div[role="grid"] {
             overflow-x: auto;
         }
     }
+
     
     /* Icons using emojis */
     .icon { font-size: 2rem; margin-right: 0.5rem; }
