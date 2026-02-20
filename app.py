@@ -20,24 +20,112 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for Swiggy style - Green/Orange gradient, glassmorphism, responsive
+# Custom CSS for app look & mobile style
 st.markdown("""
     <style>
-        /* Sidebar hide (top-right menu se khole bina) */
-    [data-testid="stSidebar"][aria-expanded="true"] {
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap');
+    
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+    .hindi-text {
+        font-family: 'Noto Sans Devanagari', sans-serif;
+    }
+
+    /* Hide default Streamlit header & footer */
+    header[data-testid="stHeader"] {
         display: none;
     }
+    #MainMenu {
+        visibility: hidden;
+    }
+    footer {
+        visibility: hidden;
+    }
+
+    /* Sidebar hide */
+    [data-testid="stSidebar"][aria-expanded="true"],
     [data-testid="stSidebar"][aria-expanded="false"] {
         display: none;
     }
-
-    /* Top-right collapse button bhi hata do */
     [data-testid="collapsedControl"] {
         display: none;
     }
 
+    .main .block-container {
+        padding-top: 4.5rem;
+    }
+
+    /* Gradient background */
+    .stApp {
+        background: linear-gradient(135deg, #00D084 0%, #FF6B35 50%, #00D084 100%);
+        background-attachment: fixed;
+    }
     
-        /* Responsive */
+    /* Glassmorphism cards */
+    .metric-card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin: 1rem 0;
+        transition: all 0.3s ease;
+    }
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Buttons */
+    .stButton > button {
+        background: linear-gradient(45deg, #00D084, #FF6B35);
+        border: none;
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 208, 132, 0.4);
+    }
+    .stButton > button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 208, 132, 0.6);
+    }
+
+    /* Top app bar (mobile app style) */
+    .custom-appbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        background: linear-gradient(90deg, #00D084, #FF6B35);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1rem;
+        z-index: 999;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        color: white;
+    }
+    .custom-appbar-logo {
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    .custom-appbar-logo span {
+        font-size: 1.4rem;
+    }
+    .custom-appbar-menu {
+        font-size: 1.4rem;
+        cursor: pointer;
+    }
+
+    /* Responsive */
     @media (max-width: 768px) {
         .main .block-container {
             padding-left: 0.5rem;
@@ -69,7 +157,22 @@ st.markdown("""
         }
     }
 
-    
+    /* Icons using emojis */
+    .icon { font-size: 2rem; margin-right: 0.5rem; }
+    </style>
+""", unsafe_allow_html=True)
+
+# Custom top app bar (mobile-app style)
+st.markdown("""
+<div class="custom-appbar">
+  <div class="custom-appbar-logo">
+    <span>🍕</span>
+    <div>Foodees</div>
+  </div>
+  <div class="custom-appbar-menu">☰</div>
+</div>
+""", unsafe_allow_html=True)
+
     /* Icons using emojis */
     .icon { font-size: 2rem; margin-right: 0.5rem; }
     </style>
