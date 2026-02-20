@@ -173,11 +173,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-    /* Icons using emojis */
-    .icon { font-size: 2rem; margin-right: 0.5rem; }
-    </style>
-""", unsafe_allow_html=True)
-
 # Database
 @st.cache_resource
 def get_db():
