@@ -14,17 +14,17 @@ import io
 
 # Page config
 st.set_page_config(
-    page_title="🍕 Foodees -  Food Delivery",
-    page_icon="🍕",
+    page_title="Foodees - Food Delivery",
+    page_icon="F",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for app look & mobile style
+# Custom CSS
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap');
-    
+
     * {
         font-family: 'Poppins', sans-serif;
     }
@@ -32,154 +32,197 @@ st.markdown("""
         font-family: 'Noto Sans Devanagari', sans-serif;
     }
 
-    /* Hide default Streamlit header & footer */
-    header[data-testid="stHeader"] {
-        display: none;
-    }
-    #MainMenu {
-        visibility: hidden;
-    }
-    footer {
-        visibility: hidden;
-    }
-
-    /* Sidebar hide */
+    /* Hide default Streamlit header & footer & sidebar */
+    header[data-testid="stHeader"] { display: none; }
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
     [data-testid="stSidebar"][aria-expanded="true"],
-    [data-testid="stSidebar"][aria-expanded="false"] {
-        display: none;
-    }
-    [data-testid="collapsedControl"] {
-        display: none;
-    }
+    [data-testid="stSidebar"][aria-expanded="false"] { display: none; }
+    [data-testid="collapsedControl"] { display: none; }
 
     .main .block-container {
-        padding-top: 4.5rem;
+        padding-top: 4rem;
+        padding-bottom: 1.2rem;
     }
 
-    /* Gradient background */
+    /* Dark single background */
     .stApp {
-        background: linear-gradient(135deg, #00D084 0%, #FF6B35 50%, #00D084 100%);
-        background-attachment: fixed;
+        background-color: #020617;
     }
-    
-    /* Glassmorphism cards */
+
+    /* Cards – white on dark */
     .metric-card {
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        padding: 1.5rem;
-        margin: 1rem 0;
-        transition: all 0.3s ease;
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid rgba(148,163,184,0.35);
+        box-shadow: 0 6px 18px rgba(15,23,42,0.35);
+        padding: 1.1rem 1.25rem;
+        margin: 0.7rem 0;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
     .metric-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(15,23,42,0.55);
     }
 
     /* Buttons */
     .stButton > button {
-        background: linear-gradient(45deg, #00D084, #FF6B35);
+        background: linear-gradient(90deg, #f97316, #fb923c);
         border: none;
-        border-radius: 50px;
-        padding: 0.75rem 2rem;
+        border-radius: 999px;
+        padding: 0.6rem 1.7rem;
         font-weight: 600;
-        color: white;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 208, 132, 0.4);
+        font-size: 0.9rem;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(249,115,22,0.5);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .stButton > button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 20px rgba(0, 208, 132, 0.6);
+        transform: scale(1.03);
+        box-shadow: 0 6px 18px rgba(249,115,22,0.7);
     }
 
-    /* Top app bar (mobile app style) */
+    /* Top app bar */
     .custom-appbar {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        height: 56px;
-        background: linear-gradient(90deg, #00D084, #FF6B35);
+        height: 54px;
+        background: #020617;
+        border-bottom: 1px solid rgba(148,163,184,0.4);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 1rem;
+        padding: 0 0.9rem;
         z-index: 999;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-        color: white;
+        box-shadow: 0 2px 8px rgba(15,23,42,0.7);
     }
     .custom-appbar-logo {
-        font-weight: 700;
-        font-size: 1.1rem;
         display: flex;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.45rem;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #e5e7eb;
     }
-    .custom-appbar-logo span {
-        font-size: 1.4rem;
+    .logo-circle {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: #f97316;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 6px rgba(249,115,22,0.7);
     }
     .custom-appbar-menu {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
+        color: #e5e7eb;
         cursor: pointer;
+        user-select: none;
     }
 
-    /* Responsive */
+    /* Simple dropdown menu */
+    .top-menu-panel {
+        position: fixed;
+        top: 54px;
+        right: 0.75rem;
+        background: #020617;
+        border-radius: 12px;
+        border: 1px solid rgba(148,163,184,0.5);
+        box-shadow: 0 10px 30px rgba(15,23,42,0.9);
+        padding: 0.4rem 0;
+        z-index: 1000;
+        width: 220px;
+    }
+    .top-menu-item {
+        padding: 0.45rem 0.9rem;
+        color: #e5e7eb;
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+    .top-menu-item:hover {
+        background: rgba(148,163,184,0.25);
+    }
+    .top-menu-divider {
+        height: 1px;
+        background: rgba(148,163,184,0.45);
+        margin: 0.25rem 0;
+    }
+
+    h1 {
+        font-size: 1.35rem;
+        color: #e5e7eb;
+    }
+    h2, h3 {
+        color: #e5e7eb;
+    }
+    p, li, label {
+        color: #e5e7eb;
+        font-size: 0.9rem;
+    }
+
     @media (max-width: 768px) {
         .main .block-container {
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding-left: 0.55rem;
+            padding-right: 0.55rem;
         }
-
         .metric-card {
-            margin: 0.4rem 0;
-            padding: 0.8rem;
+            margin: 0.5rem 0;
+            padding: 0.9rem 0.95rem;
         }
-
         .stButton > button {
             width: 100%;
-            padding: 0.9rem;
-            font-size: 0.9rem;
+            padding: 0.85rem;
+            font-size: 0.85rem;
         }
-
-        h1, h2, h3 {
-            font-size: 1.1rem;
-        }
-
+        h1 { font-size: 1.2rem; }
+        h2 { font-size: 1.05rem; }
         [data-testid="column"] {
             width: 100% !important;
             flex: 1 1 100% !important;
         }
-
         .stDataFrame, .stDataFrame div[role="grid"] {
             overflow-x: auto;
         }
     }
 
-    /* Icons using emojis */
     .icon { font-size: 2rem; margin-right: 0.5rem; }
     </style>
 """, unsafe_allow_html=True)
 
-# Custom top app bar (mobile-app style)
+# Top app bar
+if 'show_menu' not in st.session_state:
+    st.session_state.show_menu = False
+if 'active_panel' not in st.session_state:
+    st.session_state.active_panel = None  # superadmin: dashboard, restaurants, ...
+
 st.markdown("""
 <div class="custom-appbar">
   <div class="custom-appbar-logo">
-    <span>🍕</span>
+    <div class="logo-circle">F</div>
     <div>Foodees</div>
   </div>
   <div class="custom-appbar-menu">☰</div>
 </div>
 """, unsafe_allow_html=True)
 
-# Database
+# Invisible button to toggle menu (placed at top)
+menu_col1, menu_col2, menu_col3 = st.columns([5,1,1])
+with menu_col3:
+    if st.button("☰", key="menu_button", help="Menu"):
+        st.session_state.show_menu = not st.session_state.show_menu
+
+# DB
 @st.cache_resource
 def get_db():
     conn = sqlite3.connect('foodtiger.db', check_same_thread=False)
     c = conn.cursor()
-    
-    # Schema as specified
+
     c.execute('''CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         phone TEXT UNIQUE,
@@ -188,7 +231,7 @@ def get_db():
         name TEXT,
         status INTEGER DEFAULT 1
     )''')
-    
+
     c.execute('''CREATE TABLE IF NOT EXISTS restaurants (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         owner_id INTEGER,
@@ -198,7 +241,7 @@ def get_db():
         is_approved INTEGER DEFAULT 0,
         FOREIGN KEY(owner_id) REFERENCES users(id)
     )''')
-    
+
     c.execute('''CREATE TABLE IF NOT EXISTS menu_items (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         restaurant_id INTEGER,
@@ -209,7 +252,7 @@ def get_db():
         is_available INTEGER DEFAULT 1,
         FOREIGN KEY(restaurant_id) REFERENCES restaurants(id)
     )''')
-    
+
     c.execute('''CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         customer_id INTEGER,
@@ -224,10 +267,9 @@ def get_db():
         FOREIGN KEY(restaurant_id) REFERENCES restaurants(id),
         FOREIGN KEY(delivery_id) REFERENCES users(id)
     )''')
-    
+
     conn.commit()
-    
-    # Sample data (users)
+
     sample_users = [
         (9876543210, hashlib.md5('admin123'.encode()).hexdigest(), 'superadmin', 'Super Admin'),
         (9876543211, hashlib.md5('rest123'.encode()).hexdigest(), 'restaurant', 'Restaurant Owner'),
@@ -238,8 +280,7 @@ def get_db():
         "INSERT OR IGNORE INTO users (phone, password, role, name) VALUES (?, ?, ?, ?)",
         sample_users
     )
-    
-    # Sample restaurants (linked to owner_id = 2)
+
     sample_restaurants = [
         (2, 'Biryani House', 'biriyani_banner.jpg', 4.5, 1),
         (2, 'Pizza Corner', 'pizza_banner.jpg', 4.2, 1),
@@ -249,8 +290,7 @@ def get_db():
         "INSERT OR IGNORE INTO restaurants (owner_id, name, banner_image, rating, is_approved) VALUES (?, ?, ?, ?, ?)",
         sample_restaurants
     )
-    
-    # Sample menu
+
     sample_menu = [
         (1, 'Chicken Biryani', 'मुर्गा बिरयानी', 250, 'chicken_biryani.jpg'),
         (1, 'Veg Biryani', 'वेज बिरयानी', 180, 'veg_biryani.jpg'),
@@ -261,27 +301,23 @@ def get_db():
         "INSERT OR IGNORE INTO menu_items (restaurant_id, name, hindi_name, price, image_path) VALUES (?, ?, ?, ?, ?)",
         sample_menu
     )
-    
-    # Sample orders
+
     for _ in range(20):
         c.execute(
             "INSERT INTO orders (customer_id, restaurant_id, delivery_id, items_json, total, tracking_id) VALUES (?, ?, ?, ?, ?, ?)",
             (3, random.choice([1, 2]), 4, '[{"name":"Biryani","qty":2}]', random.uniform(200, 500), f'TRACK{random.randint(1000,9999)}')
         )
-    
+
     conn.commit()
     return conn
 
-# Image directory
 os.makedirs('images', exist_ok=True)
 
-# Session state
 if 'user' not in st.session_state:
     st.session_state.user = None
 if 'cart' not in st.session_state:
     st.session_state.cart = []
 
-# Helper functions
 def hash_password(pwd: str) -> str:
     return hashlib.md5(pwd.encode()).hexdigest()
 
@@ -296,31 +332,18 @@ def save_image(uploaded_file, filename):
         f.write(uploaded_file.getbuffer())
     return path
 
-# Real-time polling
 def auto_refresh():
     time.sleep(5)
     st.rerun()
 
-# Main app
 conn = get_db()
 
-# Title
-col1, col2 = st.columns([4,1])
-with col1:
-    st.title("🍕 FoodTiger - प्रोफेशनल फूड डिलीवरी ऐप")
-with col2:
-    if st.button("🔄 रिफ्रेश"):
-        st.rerun()
-
-st.markdown("---")
-
-# LOGIN
+# LOGIN SCREEN (no big title, no refresh)
 if st.session_state.user is None:
     st.header("📱 लॉगिन करें")
-    
     phone = st.text_input("📞 फोन नंबर", placeholder="9876543210")
     password = st.text_input("🔑 पासवर्ड", type="password")
-    
+
     if st.button("🚀 लॉगिन", type="primary"):
         df = pd.read_sql(
             "SELECT * FROM users WHERE phone=? AND password=? AND status=1",
@@ -329,40 +352,123 @@ if st.session_state.user is None:
         )
         if not df.empty:
             st.session_state.user = df.iloc[0].to_dict()
+            st.session_state.active_panel = None
             st.success(f"✅ स्वागत है, {st.session_state.user['name']}!")
             st.rerun()
         else:
             st.error("❌ गलत फोन या पासवर्ड!")
-    
-    st.info("**डेमो लॉगिन:**\\nSuper Admin: 9876543210/admin123\\nRestaurant: 9876543211/rest123\\nCustomer: 9876543212/cust123\\nDelivery: 9876543213/del123")
+
+    st.info("डेमो लॉगिन:\nSuper Admin: 9876543210/admin123\nRestaurant: 9876543211/rest123\nCustomer: 9876543212/cust123\nDelivery: 9876543213/del123")
+
 else:
-    # Sidebar
-    with st.sidebar:
-        st.markdown(f"👤 **{st.session_state.user['name']}**")
-        st.markdown(f"📱 {st.session_state.user['phone']}")
-        role = st.session_state.user['role']
+    user = st.session_state.user
+    role = user['role']
+
+    # Top-right dropdown menu content
+    if st.session_state.show_menu:
+        menu_html = "<div class='top-menu-panel'>"
+        menu_html += f"<div class='top-menu-item'>👤 {user['name']}</div>"
+        menu_html += "<div class='top-menu-divider'></div>"
+
+        if role == 'superadmin':
+            items = [
+                ("dashboard", "📊 डैशबोर्ड"),
+                ("restaurants", "🏪 रेस्टोरेंट्स"),
+                ("delivery", "🚚 डिलीवरी बॉय"),
+                ("orders", "📋 ऑर्डर्स"),
+                ("payments", "💰 पेमेंट्स")
+            ]
+        elif role == 'restaurant':
+            items = [
+                ("menu", "🍽️ मेन्यू"),
+                ("orders", "📦 ऑर्डर्स"),
+                ("sales", "💰 सेल्स"),
+                ("profile", "👤 प्रोफाइल")
+            ]
+        elif role == 'customer':
+            items = [
+                ("home", "🏠 होम"),
+                ("cart", "🛒 कार्ट"),
+                ("history", "📱 ऑर्डर हिस्ट्री"),
+                ("profile", "👤 प्रोफाइल")
+            ]
+        elif role == 'delivery':
+            items = [
+                ("available", "📦 उपलब्ध ऑर्डर्स"),
+                ("active", "🚚 एक्टिव डिलीवरी"),
+                ("earnings", "💰 कमाई")
+            ]
+        else:
+            items = []
+
+        # Show items as text; selection हम नीचे buttons से करेंगे
+        for key, label in items:
+            menu_html += f"<div class='top-menu-item'>{label}</div>"
+
+        menu_html += "<div class='top-menu-divider'></div>"
+        menu_html += "<div class='top-menu-item'>🚪 लॉगआउट</div>"
+        menu_html += "</div>"
+        st.markdown(menu_html, unsafe_allow_html=True)
+
+    # Actual menu selection buttons (mapped to same items)
+    st.write("")  # spacing
+    menu_buttons = []
+
+    if role == 'superadmin':
+        menu_buttons = [
+            ("dashboard", "📊 डैशबोर्ड"),
+            ("restaurants", "🏪 रेस्टोरेंट्स"),
+            ("delivery", "🚚 डिलीवरी बॉय"),
+            ("orders", "📋 ऑर्डर्स"),
+            ("payments", "💰 पेमेंट्स")
+        ]
+    elif role == 'restaurant':
+        menu_buttons = [
+            ("menu", "🍽️ मेन्यू"),
+            ("orders", "📦 ऑर्डर्स"),
+            ("sales", "💰 सेल्स"),
+            ("profile", "👤 प्रोफाइल")
+        ]
+    elif role == 'customer':
+        menu_buttons = [
+            ("home", "🏠 होम"),
+            ("cart", "🛒 कार्ट"),
+            ("history", "📱 ऑर्डर हिस्ट्री"),
+            ("profile", "👤 प्रोफाइल")
+        ]
+    elif role == 'delivery':
+        menu_buttons = [
+            ("available", "📦 उपलब्ध ऑर्डर्स"),
+            ("active", "🚚 एक्टिव डिलीवरी"),
+            ("earnings", "💰 कमाई")
+        ]
+
+    # Logout + refresh small row
+    top_row1, top_row2, top_row3 = st.columns([2,1,1])
+    with top_row2:
         if st.button("🚪 लॉगआउट"):
             st.session_state.user = None
+            st.session_state.cart = []
             st.rerun()
-        
+    with top_row3:
         if st.button("🔄 5 सेकंड रिफ्रेश"):
             auto_refresh()
-    
-    # Role-based panels
-    tab_headers = {
-        'superadmin': ['📊 डैशबोर्ड', '🏪 रेस्टोरेंट्स', '🚚 डिलीवरी बॉय', '📋 ऑर्डर्स', '💰 पेमेंट्स'],
-        'restaurant': ['🍽️ मेन्यू', '📦 ऑर्डर्स', '💰 सेल्स', '👤 प्रोफाइल'],
-        'customer': ['🏠 होम', '🛒 कार्ट', '📱 ऑर्डर हिस्ट्री', '👤 प्रोफाइल'],
-        'delivery': ['📦 उपलब्ध ऑर्डर्स', '🚚 एक्टिव डिलीवरी', '💰 कमाई']
-    }
-    
-    tabs = st.tabs(tab_headers.get(role, ['पैनल']))
-    
-    # SUPER ADMIN PANEL
+
+    # Panel selection row (small buttons)
+    if menu_buttons:
+        cols = st.columns(len(menu_buttons))
+        for i, (key, label) in enumerate(menu_buttons):
+            with cols[i]:
+                if st.button(label, key=f"panel_{key}"):
+                    st.session_state.active_panel = key
+
+    panel = st.session_state.active_panel
+
+    # SUPERADMIN PANELS
     if role == 'superadmin':
-        with tabs[0]:
+        if panel is None or panel == "dashboard":
             col1, col2, col3, col4 = st.columns(4)
-            
+
             with col1:
                 today_orders = pd.read_sql(
                     "SELECT COUNT(*) FROM orders WHERE DATE(created_at)=DATE('now')",
@@ -371,10 +477,10 @@ else:
                 st.markdown(f"""
                 <div class="metric-card">
                     <h3>📦 आज के ऑर्डर्स</h3>
-                    <h1 style='color:#00D084;'>{today_orders}</h1>
+                    <h1 style='color:#16a34a;'>{today_orders}</h1>
                 </div>
                 """, unsafe_allow_html=True)
-            
+
             with col2:
                 month_orders = pd.read_sql(
                     "SELECT COUNT(*) FROM orders WHERE strftime('%Y-%m', created_at)=strftime('%Y-%m', 'now')",
@@ -383,10 +489,10 @@ else:
                 st.markdown(f"""
                 <div class="metric-card">
                     <h3>📅 महीने के ऑर्डर्स</h3>
-                    <h1 style='color:#FF6B35;'>{month_orders}</h1>
+                    <h1 style='color:#fb923c;'>{month_orders}</h1>
                 </div>
                 """, unsafe_allow_html=True)
-            
+
             with col3:
                 rests = pd.read_sql(
                     "SELECT COUNT(*) FROM restaurants WHERE is_approved=1",
@@ -395,10 +501,10 @@ else:
                 st.markdown(f"""
                 <div class="metric-card">
                     <h3>🏪 एक्टिव रेस्टोरेंट्स</h3>
-                    <h1 style='color:#00D084;'>{rests}</h1>
+                    <h1 style='color:#16a34a;'>{rests}</h1>
                 </div>
                 """, unsafe_allow_html=True)
-            
+
             with col4:
                 users_count = pd.read_sql(
                     "SELECT COUNT(*) FROM users WHERE role='customer'",
@@ -407,10 +513,10 @@ else:
                 st.markdown(f"""
                 <div class="metric-card">
                     <h3>👥 कस्टमर्स</h3>
-                    <h1 style='color:#FF6B35;'>{users_count}</h1>
+                    <h1 style='color:#fb923c;'>{users_count}</h1>
                 </div>
                 """, unsafe_allow_html=True)
-            
+
             col1, col2 = st.columns(2)
             with col1:
                 df_orders = pd.read_sql(
@@ -428,42 +534,41 @@ else:
                 if not df_rev.empty:
                     fig_line = px.line(df_rev, x='month', y='revenue', title='रेवेन्यू ट्रेंड')
                     st.plotly_chart(fig_line, use_container_width=True)
-        
-        with tabs[1]:
+
+        elif panel == "restaurants":
             df_rests = pd.read_sql("SELECT * FROM restaurants", conn)
             st.dataframe(df_rests)
             st.subheader("✅ अप्रूव्ड रेस्टोरेंट")
             approved = df_rests[df_rests['is_approved'] == 1]
             st.dataframe(approved)
-        
-        with tabs[2]:
+
+        elif panel == "delivery":
             df_del = pd.read_sql("SELECT * FROM users WHERE role='delivery'", conn)
             st.dataframe(df_del)
-        
-        with tabs[3]:
+
+        elif panel == "orders":
             df_orders = pd.read_sql("SELECT * FROM orders ORDER BY id DESC LIMIT 50", conn)
             st.dataframe(df_orders)
-        
-        with tabs[4]:
+
+        elif panel == "payments":
             st.info("💰 पेमेंट मैनेजमेंट - आने वाला फीचर")
-    
-    # RESTAURANT PANEL
+
+    # RESTAURANT
     elif role == 'restaurant':
         rest_df = pd.read_sql(
             "SELECT id, name FROM restaurants WHERE owner_id=? AND is_approved=1",
             conn,
-            params=(st.session_state.user['id'],)
+            params=(user['id'],)
         )
         if rest_df.empty:
             st.error("❌ आपका रेस्टोरेंट अभी अप्रूव नहीं है या मौजूद नहीं है।")
             st.stop()
         rest_id = int(rest_df.iloc[0]['id'])
         rest_name = rest_df.iloc[0]['name']
-        
-        with tabs[0]:
+
+        if panel is None or panel == "menu":
             st.header(f"🍽️ {rest_name} - मेन्यू")
-            
-            # FIXED FORM BLOCK
+
             with st.form("add_item"):
                 col1, col2 = st.columns(2)
                 with col1:
@@ -473,9 +578,9 @@ else:
                 with col2:
                     uploaded = st.file_uploader("फूड फोटो", type=['jpg', 'png'])
                     available = st.checkbox("उपलब्ध", value=True)
-                
+
                 submit_menu = st.form_submit_button("➕ जोड़ें")
-                
+
                 if submit_menu:
                     if not name:
                         st.error("नाम ज़रूरी है!")
@@ -490,14 +595,14 @@ else:
                         conn.commit()
                         st.success("✅ जोड़ा गया!")
                         st.rerun()
-            
+
             df_menu = pd.read_sql(
                 "SELECT * FROM menu_items WHERE restaurant_id=? ORDER BY id DESC",
                 conn,
                 params=(rest_id,)
             )
             st.dataframe(df_menu)
-            
+
             for idx, row in df_menu.iterrows():
                 col1, col2, col3 = st.columns([2, 1, 1])
                 with col1:
@@ -514,8 +619,8 @@ else:
                         conn.execute("DELETE FROM menu_items WHERE id=?", (row['id'],))
                         conn.commit()
                         st.rerun()
-        
-        with tabs[1]:
+
+        elif panel == "orders":
             df_orders = pd.read_sql(
                 "SELECT * FROM orders WHERE restaurant_id=? ORDER BY id DESC",
                 conn,
@@ -540,8 +645,8 @@ else:
                         conn.commit()
                         st.success("✅ अपडेट!")
                         st.rerun()
-        
-        with tabs[2]:
+
+        elif panel == "sales":
             df_sales = pd.read_sql(
                 "SELECT strftime('%Y-%m-%d', created_at) as date, SUM(total) as revenue FROM orders WHERE restaurant_id=? GROUP BY date",
                 conn,
@@ -551,23 +656,23 @@ else:
             if not df_sales.empty:
                 fig = px.bar(df_sales, x='date', y='revenue', title="दैनिक सेल्स")
                 st.plotly_chart(fig, use_container_width=True)
-        
-        with tabs[3]:
+
+        elif panel == "profile":
             st.info("🏪 रेस्टोरेंट प्रोफाइल - आने वाला फीचर")
-    
-    # CUSTOMER PANEL
+
+    # CUSTOMER
     elif role == 'customer':
-        with tabs[0]:
+        if panel is None or panel == "home":
             st.header("🔥 वेलकम होम!")
-            
+
             banners = ["50% ऑफ फर्स्ट ऑर्डर!", "फ्री डिलीवरी ऑन 3+ आइटम्स", "बिरयानी @ ₹99"]
             selected_banner = random.choice(banners)
             st.markdown(f"""
-            <div class="metric-card" style='text-align:center; font-size:2rem; color:white;'>
+            <div class="metric-card" style='text-align:center; font-size:1.4rem; color:#0f172a;'>
                 🎉 {selected_banner} 🎉
             </div>
             """, unsafe_allow_html=True)
-            
+
             st.subheader("🏪 पॉपुलर रेस्टोरेंट्स")
             cols = st.columns(3)
             rest_samples = [
@@ -579,12 +684,12 @@ else:
                 with cols[i]:
                     st.markdown(f"""
                     <div class="metric-card">
-                        <h3>{rest['name']}</h3>
-                        <p>⭐ {rest['rating']} | ⏱️ {rest['time']}</p>
-                        <p style='color:#FF6B35; font-weight:bold;'>{rest['offer']}</p>
+                        <h3 style='color:#0f172a;'>{rest['name']}</h3>
+                        <p style='color:#0f172a;'>⭐ {rest['rating']} | ⏱️ {rest['time']}</p>
+                        <p style='color:#b91c1c; font-weight:bold;'>{rest['offer']}</p>
                     </div>
                     """, unsafe_allow_html=True)
-            
+
             st.subheader("🍕 ट्रेंडिंग फूड")
             food_samples = [
                 ('Chicken Biryani', 'मुर्गा बिरयानी', 250),
@@ -599,17 +704,17 @@ else:
                     if st.button("➕", key=f"add_{food[0]}"):
                         st.session_state.cart.append({'name': food[0], 'price': food[2], 'qty': 1})
                         st.rerun()
-        
-        with tabs[1]:
+
+        elif panel == "cart":
             if st.session_state.cart:
                 st.subheader("🛒 शॉपिंग कार्ट")
                 total = 0
                 for item in st.session_state.cart:
                     st.write(f"{item['name']} x{item['qty']} - ₹{item['price'] * item['qty']}")
                     total += item['price'] * item['qty']
-                
+
                 st.markdown(f"**ग्रैंड टोटल: ₹{total}**")
-                
+
                 col1, col2 = st.columns(2)
                 with col1:
                     if st.button("🗑️ क्लियर कार्ट"):
@@ -620,7 +725,7 @@ else:
                         tracking = f'TRACK{random.randint(1000, 9999)}'
                         conn.execute(
                             "INSERT INTO orders (customer_id, restaurant_id, items_json, total, tracking_id) VALUES (?, ?, ?, ?, ?)",
-                            (st.session_state.user['id'], 1, str(st.session_state.cart), total, tracking)
+                            (user['id'], 1, str(st.session_state.cart), total, tracking)
                         )
                         conn.commit()
                         st.success(f"✅ ऑर्डर प्लेस! ट्रैकिंग: {tracking}")
@@ -628,21 +733,21 @@ else:
                         st.rerun()
             else:
                 st.info("🛒 आपका कार्ट खाली है!")
-        
-        with tabs[2]:
+
+        elif panel == "history":
             df_myorders = pd.read_sql(
                 "SELECT * FROM orders WHERE customer_id=? ORDER BY id DESC",
                 conn,
-                params=(st.session_state.user['id'],)
+                params=(user['id'],)
             )
             st.dataframe(df_myorders)
-        
-        with tabs[3]:
+
+        elif panel == "profile":
             st.info("👤 प्रोफाइल - एड्रेस मैनेजमेंट आने वाला")
-    
-    # DELIVERY PANEL
+
+    # DELIVERY
     elif role == 'delivery':
-        with tabs[0]:
+        if panel is None or panel == "available":
             df_avail = pd.read_sql(
                 "SELECT * FROM orders WHERE delivery_id IS NULL AND status='ready' ORDER BY id DESC LIMIT 10",
                 conn
@@ -657,15 +762,15 @@ else:
                         if st.button("✅ एक्सेप्ट", key=f"accept_{order['id']}"):
                             conn.execute(
                                 "UPDATE orders SET delivery_id=? WHERE id=?",
-                                (st.session_state.user['id'], order['id'])
+                                (user['id'], order['id'])
                             )
                             conn.commit()
                             st.success("✅ एक्सेप्टेड!")
                             st.rerun()
                     with col2:
                         st.caption("❌ रिजेक्ट (dummy)")
-        
-        with tabs[1]:
+
+        elif panel == "active":
             df_active = pd.read_sql(
                 """
                 SELECT o.*, u.name as cust_name 
@@ -674,20 +779,20 @@ else:
                 WHERE o.delivery_id = ? AND o.status != 'delivered'
                 """,
                 conn,
-                params=(st.session_state.user['id'],)
+                params=(user['id'],)
             )
             if df_active.empty:
                 st.info("🚚 कोई एक्टिव डिलीवरी नहीं है।")
             for idx, order in df_active.iterrows():
                 st.markdown(f"""
                 <div class="metric-card">
-                    <h3>📦 ऑर्डर #{order['id']} - {order['cust_name']}</h3>
-                    <p>📱 9876******123 (मास्क्ड)</p>
-                    <p>💰 ₹{order['total']}</p>
-                    <p>📍 रेस्टोरेंट → कस्टमर (20km, ETA 25min)</p>
+                    <h3 style='color:#0f172a;'>📦 ऑर्डर #{order['id']} - {order['cust_name']}</h3>
+                    <p style='color:#0f172a;'>📱 9876******123 (मास्क्ड)</p>
+                    <p style='color:#0f172a;'>💰 ₹{order['total']}</p>
+                    <p style='color:#0f172a;'>📍 रेस्टोरेंट → कस्टमर (20km, ETA 25min)</p>
                 </div>
                 """, unsafe_allow_html=True)
-                
+
                 col1, col2, col3 = st.columns(3)
                 with col1:
                     if st.button("📞 कॉल", key=f"call_{order['id']}"):
@@ -709,8 +814,8 @@ else:
                     ))
                     fig.update_layout(mapbox_style="open-street-map", mapbox=dict(zoom=10))
                     st.plotly_chart(fig, use_container_width=True, key=f"del_map_{order['id']}")
-        
-        with tabs[2]:
+
+        elif panel == "earnings":
             earnings_df = pd.read_sql(
                 """
                 SELECT 
@@ -720,7 +825,7 @@ else:
                 WHERE delivery_id=? AND status='delivered'
                 """,
                 conn,
-                params=(st.session_state.user['id'],)
+                params=(user['id'],)
             )
             if not earnings_df.empty:
                 earnings = earnings_df.iloc[0]
@@ -733,6 +838,6 @@ else:
 # Footer
 st.markdown("---")
 st.markdown(
-    "<p style='text-align:center; color:rgba(255,255,255,0.8);'>🍕 Foodees - Sikariganj का सबसे तेज डिलीवरी ऐप | Made with ❤️ by foodees</p>",
+    "<p style='text-align:center; color:rgba(248,250,252,0.8);'>🍕 Foodees - Sikariganj का तेज डिलीवरी ऐप | Made with ❤️ by Foodees</p>",
     unsafe_allow_html=True
 )
